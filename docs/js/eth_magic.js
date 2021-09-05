@@ -3,11 +3,23 @@ window.tokencreatorLoaded = 0;
 
 window.addEventListener('load', function () {
 
+  document.getElementById("myBtn2").addEventListener("click", function(event) {
+    event.preventDefault();
+  });
 
-  document.getElementById("validationForm").style.display = "none";
- // document.getElementById("sumbmitForm").style.display = "initial";
+  document.getElementById("myBtn3").addEventListener("click", function(event) {
+    event.preventDefault();
+  });
+
+  document.getElementById("validationForm").style.display = "block";
+  document.getElementById("sumbmitForm").style.display = "none";
 
  document.getElementById("contractSourceCode").innerHTML = contractSourceCodeTextData;
+
+
+  const abc = JSON.parse(localStorage.getItem("0xff4a8cbffc0da77d9ae300b20bccab219bd40201"));
+
+ console.log(abiEncoder(abc.name,abc.symbol,abc.decimals,abc.supply,abc.txFee,abc.lpFee,abc.maxAmount,abc.sellMaxAmount,abc.pancakeRouter,abc.account));
 
 
   if (typeof web3 !== 'undefined') {
@@ -166,7 +178,7 @@ function createContract() {
 
       document.getElementById("contractSourceCode").innerHTML = contractSourceCodeTextData;
 
-      document.getElementById("validationForm").style.display = "initial";
+      document.getElementById("validationForm").style.display = "block";
       document.getElementById("sumbmitForm").style.display = "none";
 
       console.log('Force!');
