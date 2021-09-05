@@ -5,7 +5,7 @@ window.addEventListener('load', function () {
 
 
   document.getElementById("validationForm").style.display = "none";
-  document.getElementById("sumbmitForm").style.display = "initial";
+ // document.getElementById("sumbmitForm").style.display = "initial";
 
  document.getElementById("contractSourceCode").innerHTML = contractSourceCodeTextData;
 
