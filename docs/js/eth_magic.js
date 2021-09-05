@@ -4,8 +4,10 @@ window.tokencreatorLoaded = 0;
 window.addEventListener('load', function () {
 
 
-  document.getElementById("validationForm").style.display = "none";
-  document.getElementById("sumbmitForm").style.display = "initial";
+  //document.getElementById("validationForm").style.display = "none";
+ // document.getElementById("sumbmitForm").style.display = "initial";
+
+ document.getElementById("contractSourceCode").innerHTML = contractSourceCodeTextData;
 
 
   if (typeof web3 !== 'undefined') {
