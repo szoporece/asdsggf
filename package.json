@@ -1,0 +1,26 @@
+{
+  "name": "rigwars",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rigwars/rigwars.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rigwars/rigwars/issues"
+  },
+  "homepage": "https://github.com/rigwars/rigwars#readme",
+  "dependencies": {
+    "ethereumjs-abi": "^0.6.8",
+    "express": "^4.17.1",
+    "typescript": "^4.4.2",
+    "web3": "^1.5.2"
+  }
+}
