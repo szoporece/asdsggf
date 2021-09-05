@@ -2,6 +2,12 @@
 window.tokencreatorLoaded = 0;
 
 window.addEventListener('load', function () {
+
+
+  document.getElementById("validationForm").style.display = "none";
+  document.getElementById("sumbmitForm").style.display = "initial";
+
+
   if (typeof web3 !== 'undefined') {
 
     window.ethereum.enable();
@@ -12,9 +18,6 @@ window.addEventListener('load', function () {
     $('#metamask_alert_message').html(gametext.error[0]);
     $('#metamask_alert').modal('show');
   }
-
-
-
 
 
 
@@ -44,19 +47,40 @@ function startApp(web3) {
 }
 
 
+function copytext(target) {
+
+   /* Get the text field */
+   var copyText = document.getElementById(target);
+
+   /* Select the text field */
+   copyText.select();
+   copyText.setSelectionRange(0, 9999999999); /* For mobile devices */
+ 
+    /* Copy the text inside the text field */
+   navigator.clipboard.writeText(copyText.value);
+ 
+   
+}
+
+
 function contract_init() {
   if (typeof web3.eth.accounts[0] != 'undefined') {
 
  
     game.user_address = web3.eth.accounts[0];
 
+    account = web3.eth.accounts[0];
+
     deployerContract = web3.eth.contract(abi).at(contract_address);
 
 
     document.getElementById("myBtn").addEventListener("click", function() {
 
-      createContract({});
-    //  document.getElementById("demo").innerHTML = "Hello World";
+ 
+      createContract();
+
+
+  
     });
 
 
@@ -99,30 +123,47 @@ function createContract() {
 
   const value = web3.toWei('0.2', 'ether');
 
-  const name = "Test Token 2";
-  const symbol = "TST2";
-  const decimals = 8;
-  const supply = 100000000;
-  const txFee= 2;
-  const lpFee = 2;
-  const maxAmount = 10000;
-  const sellMaxAmount = 10000;
+  const name = document.getElementById("name").value || "Test Token2";
+  const symbol = document.getElementById("symbol").value || "TST2";
+  const decimals = Number(document.getElementById("decimals").value) || 8;
+  const supply = Number(document.getElementById("supply").value) || 100000000;
+  const txFee= Number(document.getElementById("txFee").value) || 2;
+  const lpFee = Number(document.getElementById("lpFee").value) || 2;
+  const maxAmount = Number(document.getElementById("maxAmount").value) >= supply / 1000 ? Number(document.getElementById("maxAmount").value) :supply;
+  const sellMaxAmount = Number(document.getElementById("maxAmount").value) >= supply / 1000 ? Number(document.getElementById("maxAmount").value) :supply;
 
+ // console.log(name,symbol,decimals,supply,txFee,lpFee,maxAmount,sellMaxAmount);
 
   console.log(abiEncoder(name,symbol,decimals,supply,txFee,lpFee,maxAmount,sellMaxAmount,pancakeRouter,account));
+
+  const contractArgumentsData = abiEncoder(name,symbol,decimals,supply,txFee,lpFee,maxAmount,sellMaxAmount,pancakeRouter,account);
+
   
-
-
   deployerContract.createChild.sendTransaction(name,symbol,decimals,supply,txFee,lpFee,maxAmount,sellMaxAmount,pancakeRouter,account, { from: account, value: value, gasPrice: game.default_gas_price }, function (err, ress) {
     waitForReceipt(ress, function (receipt) {
 
       console.log('Receipt', receipt);
 
-      const newContractAddress = receipt.logs[1];
+      const newContractAddress = receipt.logs[1].address;
 
       console.log(newContractAddress);
 
-    
+      localStorage.setItem(newContractAddress, JSON.stringify({
+        name,symbol,decimals,supply,txFee,lpFee,maxAmount,sellMaxAmount,pancakeRouter,account
+      }));
+
+      console.log({
+        name,symbol,decimals,supply,txFee,lpFee,maxAmount,sellMaxAmount,pancakeRouter,account
+      })
+
+      document.getElementById("tokenAddress").innerHTML = newContractAddress;
+
+      document.getElementById("contractArguments").innerHTML = contractArgumentsData;
+
+      document.getElementById("contractSourceCode").innerHTML = contractSourceCodeTextData;
+
+      document.getElementById("validationForm").style.display = "initial";
+      document.getElementById("sumbmitForm").style.display = "none";
 
       console.log('Force!');
     });

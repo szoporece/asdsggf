@@ -8,13 +8,34 @@
         <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon" />
 
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@forevolve/bootstrap-dark@1.0.0/dist/css/bootstrap-dark.min.css" />
+        <!-- Font Awesome -->
+          <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+          rel="stylesheet"
+          />
+          <!-- Google Fonts -->
+          <link
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          rel="stylesheet"
+          />
+          <!-- MDB -->
+          <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css"
+          rel="stylesheet"
+          />
+
+
+          <script
+          type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"
+        ></script>
 
         <script src="https://unpkg.com/@metamask/legacy-web3@latest/dist/metamask.web3.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 
 
         <script src="./js/constants/game_constant.js" ></script>
+        <script src="./js/contract/sourceCode.js" ></script>
         <script src="./js/contract/abi.js" ></script>
    
         <script src="./js/game.js" ></script>
@@ -27,14 +48,98 @@
     </head>
     <body>
       
-      <button id="myBtn">Try it</button>
+
+      <div class="container">
+        <div class="row">
+ 
+
+      <div class="col-lg-8 align-self-center">
+
+    
+      <form id='sumbmitForm'  class="p-5">
+
+        <p class="h4 mb-4 text-center">TokenDeployer - BSC Network</p>
+    
+        <div class="custom-control custom-checkbox mb-4">
+            <input type="checkbox" class="custom-control-input" id="checkbox">
+            <label class="custom-control-label" for="checkbox">I do understand that TokenDeployer, is not responsible for the future usage of the contract.</label>
+        </div>
+    
+        <div class="custom-control custom-checkbox mb-4">
+            <input type="checkbox" class="custom-control-input" id="checkbox1">
+            <label class="custom-control-label" for="checkbox1">I do aggree that, my contract would not be used for DeFi activities agains the community.</label>
+        </div>
+    
+        <div class="custom-control custom-checkbox mb-4">
+            <input type="checkbox" class="custom-control-input" id="checkbox2">
+            <label class="custom-control-label" for="checkbox2">I do aggreee that, TokenDeployer transaction cannot be reverted, removed and neither refunded!</label>
+        </div>
+    
+        <label for="textInput">Full name of the token: (e.g. SafeMoon)</label>
+        <input type="text" maxlength="64" id="name" class="form-control mb-4" placeholder="SafeMoon">
+    
+        <label for="textInput">Symbol the the token:: (e.g. SFM)</label>
+        <input type="text" maxlength="10" id="symbol" class="form-control mb-4" placeholder="SFM">
+    
+        <label for="textInput">Decimals: (e.g. 1.00000001)</label>
+        <input type="number" min="2" value="8" max="20"  id="decimals" class="form-control mb-4" placeholder="8">
+    
+        <label for="textInput">Max Supply: (e.g. 21.000.000)</label>
+        <input type="number" min="1000" value="21000000"  id="supply" class="form-control mb-4" placeholder="21000000">
+    
+        <p id="helper" class="form-text mb-4">Advanced DeFi options:</p>
+    
+        <label for="textInput">Transaction fee (in percent):</label>
+        <input type="number" min="0" value="4" max="10" id="txFee" class="form-control mb-4" placeholder="2">
+    
+        <label for="textInput">Liquidity fee (in percent):</label>
+        <input type="number" min="0" value="7" max="10" id="lpFee" class="form-control mb-4" placeholder="5">
+    
+        <p id="helper" class="form-text  mb-4">Anti-Whalle and Bot Defense options:</p>
+    
+        <label for="textInput">Maximum transaction amount: (default No Limit!)</label>
+        <input type="number"   id="maxAmount" class="form-control mb-4" placeholder="No limit">
+    
+        <label for="textInput">Maximum sell amount: (default No Limit!)</label>
+        <input type="number"   id="sellMaxAmount" class="form-control mb-4" placeholder="No limit">
+    
+        <button class="btn btn-info btn-block my-4" id="myBtn" type="submit">Deploy Token Contract</button>
+    
+        </form>
+
+        <form id='validationForm' class="p-5">
+
+         <p>Your token address: <span id='tokenAddress'>0x000000</span></p>
+         <p>Compiler version: <span style="font-weight: 600;" >v0.6.12+commit.27d51765</span></p>
+         <p>Optimization Enabled: <span  style="font-weight: 600;" >Yes(200)</span></p>
+         <p>License: <span  style="font-weight: 600;" >No License</span></p>
+         <p>Contract Type: <span  style="font-weight: 600;" >Single File</span></p>
+
+
+         <div class="mb-3">
+          <label for="contractArguments" class="form-label">Constructor arguments:</label>
+          <button onclick="copytext('contractArguments')">Copy text</button>
+          <textarea class="form-control" id="contractArguments" rows="3"></textarea>
+        </div>
+
+
+        <div class="mb-3">
+          <label for="contractSourceCode" class="form-label">Contract Source Code:</label>
+          <button onclick="copytext('contractSourceCode')">Copy text</button>
+          <textarea class="form-control" id="contractSourceCode" rows="20"></textarea>
+        </div>
+      </form>
+
+          </div>
+        </div>
+    
+      </div>
+    
+    
 
     <footer class="text-muted">
       <div class="container">
-        <p class="float-right">
-          <a href="#">Back to top</a>
-        </p>
-        <p>Just a game! <span id="reflink"></span>  </p>
+        <p>Token Deployer 2021</p>
       </div>
     </footer>
 
