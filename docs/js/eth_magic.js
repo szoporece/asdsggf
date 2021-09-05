@@ -17,8 +17,7 @@ window.addEventListener('load', function () {
     startApp(web3);
   }
   else {
-    $('#metamask_alert_message').html(gametext.error[0]);
-    $('#metamask_alert').modal('show');
+    alert("Install Metamask / TrustWallet first and switch to BinanceChain network!");
   }
 
 
