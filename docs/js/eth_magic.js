@@ -11,15 +11,11 @@ window.addEventListener('load', function () {
     event.preventDefault();
   });
 
-  document.getElementById("validationForm").style.display = "block";
-  document.getElementById("sumbmitForm").style.display = "none";
+  document.getElementById("validationForm").style.display = "none";
+  document.getElementById("sumbmitForm").style.display = "block";
 
  document.getElementById("contractSourceCode").innerHTML = contractSourceCodeTextData;
 
-
-  const abc = JSON.parse(localStorage.getItem("0xff4a8cbffc0da77d9ae300b20bccab219bd40201"));
-
- console.log(abiEncoder(abc.name,abc.symbol,abc.decimals,abc.supply,abc.txFee,abc.lpFee,abc.maxAmount,abc.sellMaxAmount,abc.pancakeRouter,abc.account));
 
 
   if (typeof web3 !== 'undefined') {
