@@ -75,9 +75,12 @@ function contract_init() {
     deployerContract = web3.eth.contract(abi).at(contract_address);
 
 
-    document.getElementById("myBtn").addEventListener("click", function() {
 
- 
+
+
+    document.getElementById("myBtn").addEventListener("click", function(event) {
+
+      event.preventDefault();
       createContract();
 
 
