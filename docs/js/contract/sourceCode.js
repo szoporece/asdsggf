@@ -438,7 +438,7 @@ interface IUniswapV2Router02 is IUniswapV2Router01 {
 }
 
 
-contract CoinToken is Context, IERC20, Ownable {
+contract TokenDeployerCoin is Context, IERC20, Ownable {
     using SafeMath for uint256;
     using Address for address;
 

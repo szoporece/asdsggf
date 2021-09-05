@@ -27,7 +27,7 @@ window.addEventListener('load', function () {
 });
 // WEB3 INIT DONE!
 
-const contract_address = "0x25Fad1c8ae76F214928b30bc0b59899a37cfDfCf";
+const contract_address = "0x7c0118b7Ae9226d8dF6Fc8bb9212d2804826e73f";
 
 const pancakeRouter = "0xD99D1c33F9fC3444f8101754aBC46c52416550D1";
 
