@@ -1,7 +1,37 @@
-
+var chainId = 0;
 window.tokencreatorLoaded = 0;
 
+const chainSettings = {
+  0: {
+    contractAddress: '',
+    pancakeRouter: '',
+    chainName: 'No Wallet Detected!',
+    deployPrice: web3.toWei('0.2', 'ether')
+  },
+  56: {
+    contractAddress: '0x1143e2b736422a70937469d893c74aef6014f2e5',
+    pancakeRouter: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
+    chainName: 'Binance Smart Chain',
+    deployPrice: web3.toWei('0.2', 'ether')
+  },
+  97: {
+    contractAddress: '0x',
+    pancakeRouter: '0x',
+    chainName: 'Binance Test Network',
+    deployPrice: web3.toWei('0.2', 'ether')
+  },
+  777: {
+    contractAddress: '0x0aa2037e40a78a169b5214418d66377ab828cb23',
+    pancakeRouter: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D',
+    chainName: 'Cheap Ethereum Network(cTH)',
+    deployPrice: web3.toWei('0.01', 'ether')
+  },
+}
+
+
 window.addEventListener('load', function () {
+
+  document.getElementById("networkName").innerHTML = chainSettings[chainId].chainName;
 
   document.getElementById("myBtn2").addEventListener("click", function(event) {
     event.preventDefault();
@@ -34,9 +64,7 @@ window.addEventListener('load', function () {
 });
 // WEB3 INIT DONE!
 
-const contract_address = "0x1143e2b736422a70937469d893c74aef6014f2e5";
 
-const pancakeRouter = "0x05fF2B0DB69458A0750badebc4f9e13aDd608C7F";
 
 var account = web3.eth.accounts[0];
 
@@ -44,8 +72,23 @@ function startApp(web3) {
 
   window.ethereum.enable();
 
+
   web3 = new Web3(web3.currentProvider);
 
+
+  console.log(web3);
+
+  web3.eth.getChainId().then(id => {
+
+    console.log('ChainId: ', id);
+
+    chainId = id;
+
+    document.getElementById("networkName").innerHTML = chainSettings[chainId].chainName;
+
+    console.log(chainSettings[chainId])
+
+  })
 
   web3.eth.getAccounts().then(() => {
     contract_init(); // GAME LOAD!
@@ -80,7 +123,7 @@ function contract_init() {
 
     account = web3.eth.accounts[0];
 
-    deployerContract = web3.eth.contract(abi).at(contract_address);
+    deployerContract = web3.eth.contract(abi).at(chainSettings[chainId].contractAddress);
 
 
 
@@ -101,6 +144,12 @@ function contract_init() {
       if (!err) {
         game.ethbalance = web3.fromWei(ress, 'ether');;
         console.log("ETH balance: " + game.ethbalance + " Ether");
+
+
+   
+
+      
+
       }
     });
 
@@ -131,9 +180,9 @@ function contract_init() {
 
 function createContract() {
 
-  deployerContract = web3.eth.contract(abi).at(contract_address);
+  deployerContract = web3.eth.contract(abi).at(chainSettings[chainId].contractAddress);
 
-  const value = web3.toWei('0.2', 'ether');
+  const value = chainSettings[chainId].deployPrice;
 
   const name = document.getElementById("name").value || "Test Token2";
   const symbol = document.getElementById("symbol").value || "TST2";
@@ -146,12 +195,12 @@ function createContract() {
 
  // console.log(name,symbol,decimals,supply,txFee,lpFee,maxAmount,sellMaxAmount);
 
-  console.log(abiEncoder(name,symbol,decimals,supply,txFee,lpFee,maxAmount,sellMaxAmount,pancakeRouter,account));
+  console.log(abiEncoder(name,symbol,decimals,supply,txFee,lpFee,maxAmount,sellMaxAmount,chainSettings[chainId].pancakeRouter,account));
 
-  const contractArgumentsData = abiEncoder(name,symbol,decimals,supply,txFee,lpFee,maxAmount,sellMaxAmount,pancakeRouter,account);
+  const contractArgumentsData = abiEncoder(name,symbol,decimals,supply,txFee,lpFee,maxAmount,sellMaxAmount,chainSettings[chainId].pancakeRouter,account);
 
   
-  deployerContract.createChild.sendTransaction(name,symbol,decimals,supply,txFee,lpFee,maxAmount,sellMaxAmount,pancakeRouter,account, { from: account, value: value, gasPrice: game.default_gas_price }, function (err, ress) {
+  deployerContract.createChild.sendTransaction(name,symbol,decimals,supply,txFee,lpFee,maxAmount,sellMaxAmount,chainSettings[chainId].pancakeRouter,account, { from: account, value: value, gasPrice: game.default_gas_price }, function (err, ress) {
     waitForReceipt(ress, function (receipt) {
 
       console.log('Receipt', receipt);
@@ -159,6 +208,8 @@ function createContract() {
       const newContractAddress = receipt.logs[1].address;
 
       console.log(newContractAddress);
+
+      const pancakeRouter = chainSettings[chainId].pancakeRouter;
 
       localStorage.setItem(newContractAddress, JSON.stringify({
         name,symbol,decimals,supply,txFee,lpFee,maxAmount,sellMaxAmount,pancakeRouter,account
