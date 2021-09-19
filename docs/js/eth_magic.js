@@ -26,6 +26,12 @@ const chainSettings = {
     chainName: 'Cheap Ethereum Network(cTH)',
     deployPrice: web3.toWei('0.01', 'ether')
   },
+   787: {
+    contractAddress: '0x0aa2037E40a78A169B5214418D66377ab828cb23',
+    pancakeRouter: '0xab06aD5E30c039c0fb628fe8598e569Fb6B97fdc',
+    chainName: 'devETH chain',
+    deployPrice: web3.toWei('0.01', 'ether')
+  }
 }
 
 
